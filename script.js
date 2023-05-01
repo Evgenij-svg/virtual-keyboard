@@ -7,10 +7,19 @@ const keysDey = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '='
 
 let keys = keysEng;
 keys = keysDey;
-
+keys = keysEng;
 let CapsLock = false;
 
 let EngDeu = false;
+
+const arrEngDeu = [];
+arrEngDeu.push(keys.indexOf('z'));
+arrEngDeu.push(keys.indexOf('y'));
+arrEngDeu.push(keys.indexOf('['));
+arrEngDeu.push(keys.indexOf(']'));
+arrEngDeu.push(keys.indexOf(';'));
+arrEngDeu.push(keys.indexOf(','));
+console.log(arrEngDeu);
 
 function KeyClick(nameKey) {
   if (nameKey === 'Shift') {
@@ -193,7 +202,19 @@ function handle(e) {
         if (count % 4 === 0) {
           count = 0;
           EngDeu = !EngDeu;
-          console.log(EngDeu);
+          if (EngDeu) {
+            keys = keysDey;
+          } else {
+            keys = keysEng;
+          }
+          arrEngDeu.forEach((keyPosition) => {
+            KeybordKeyAll[keyPosition] = keys[keyPosition];
+            KeybordKeyAll[keyPosition].onclick = () => {
+              KeyClick(keys[keyPosition]);
+            };
+            const NameKey = KeybordKeyAll[keyPosition].querySelector('span');
+            NameKey.textContent = keys[keyPosition];
+          });
         }
       }
     });
