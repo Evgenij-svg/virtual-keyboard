@@ -19,7 +19,6 @@ arrEngDeu.push(keys.indexOf('['));
 arrEngDeu.push(keys.indexOf(']'));
 arrEngDeu.push(keys.indexOf(';'));
 arrEngDeu.push(keys.indexOf(','));
-console.log(arrEngDeu);
 
 function KeyClick(nameKey) {
   if (nameKey === 'Shift') {
