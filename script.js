@@ -91,6 +91,12 @@ keys.forEach((elem) => {
   KeybordKey.onclick = () => {
     KeyClick(elem.startsWith('Shift') ? 'Shift' : elem);
   };
+  KeybordKey.addEventListener('mousedown', () => {
+    KeybordKey.style.boxShadow = '3px 3px 5px black';
+  });
+  KeybordKey.addEventListener('mouseup', () => {
+    KeybordKey.style.boxShadow = '0px 0px 0px black';
+  });
   Keybord.appendChild(KeybordKey);
 });
 
