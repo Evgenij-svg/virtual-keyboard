@@ -2,74 +2,16 @@ const body = document.querySelector('body');
 const Keybord = document.createElement('div');
 const input = document.createElement('textarea');
 Keybord.classList.add('Keybord');
-const keys = [
-  '`',
-  '1',
-  '2',
-  '3',
-  '4',
-  '5',
-  '6',
-  '7',
-  '8',
-  '9',
-  '0',
-  '-',
-  '=',
-  'Backspace',
-  'Tab',
-  'q',
-  'w',
-  'e',
-  'r',
-  't',
-  'y',
-  'u',
-  'i',
-  'o',
-  'p',
-  '[',
-  ']',
-  '\\',
-  'Del',
-  'Caps-Lock',
-  'a',
-  's',
-  'd',
-  'f',
-  'g',
-  'h',
-  'j',
-  'k',
-  'l',
-  ';',
-  "'",
-  'Enter',
-  'Shift1',
-  '?',
-  'z',
-  'x',
-  'c',
-  'v',
-  'b',
-  'n',
-  'm',
-  ',',
-  '.',
-  '/',
-  '↑',
-  'Shift2',
-  'Ctrl',
-  'Win',
-  'Alt',
-  'Space',
-  'Alt',
-  'Ctrl',
-  '←',
-  '↓',
-  '→',
-];
+const keysEng = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'Del', 'Caps-Lock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'", 'Enter', 'Shift1', '?', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '↑', 'Shift2', 'Ctrl', 'Win', 'Alt', 'Space', 'Alt', 'Ctrl', '←', '↓', '→'];
+const keysDey = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p', 'ü', '|', '\\', 'Del', 'Caps-Lock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ö', 'ä', 'Enter', 'Shift1', '?', 'y', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '↑', 'Shift2', 'Ctrl', 'Win', 'Alt', 'Space', 'Alt', 'Ctrl', '←', '↓', '→'];
+
+let keys = keysEng;
+keys = keysDey;
+
 let CapsLock = false;
+
+let EngDeu = false;
+
 function KeyClick(nameKey) {
   if (nameKey === 'Shift') {
     const event = new KeyboardEvent('keydown', { shiftKey: true });
@@ -137,6 +79,7 @@ function KeyClick(nameKey) {
     input.value += nameKey;
   }
 }
+let count = 0;
 
 keys.forEach((elem) => {
   const KeybordKey = document.createElement('div');
@@ -154,7 +97,6 @@ keys.forEach((elem) => {
 const KeybordKeyAll = Keybord.querySelectorAll('.Keybord-key');
 
 function handle(e) {
-  console.log(e.code);
   if (e.key === 'Shift') {
     const filteredKeys = keys.filter((elem) => elem.startsWith('Shift'));
     const indexes = filteredKeys.map((elem) => keys.indexOf(elem));
@@ -230,6 +172,26 @@ function handle(e) {
       KeybordKeyAll[keys.indexOf(text.toLowerCase())].classList.toggle('Visible');
     }
   }
+  const ctrlIndexes = keys.reduce((indexes, key, index) => {
+    if (key.startsWith('Ctrl')) {
+      indexes.push(index);
+    }
+    return indexes;
+  }, []);
+  const filteredKeys = keys.filter((elem) => elem.startsWith('Shift'));
+  const indexes = filteredKeys.map((elem) => keys.indexOf(elem));
+  indexes.forEach((elem) => {
+    ctrlIndexes.forEach((element) => {
+      if (KeybordKeyAll[elem].classList.contains('Visible') && KeybordKeyAll[element].classList.contains('Visible')) {
+        count += 1;
+        if (count % 4 === 0) {
+          count = 0;
+          EngDeu = !EngDeu;
+          console.log(EngDeu);
+        }
+      }
+    });
+  });
 }
 
 input.onkeydown = handle;
